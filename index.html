@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Интерактивный велосипед с мерцанием</title>
+	<style>
+		body {
+			background-image: url('./img/bg.jpg');
+			background-repeat: no-repeat;
+			background-position: center 0;
+			font-family: 'Nunito Sans', Open Sans, sans-serif;
+
+		}
+
+		:root {
+			--clr1: #0070D5;
+		}
+
+		.cnt {
+			position: relative;
+			max-width: 926px;
+			margin: 0 auto;
+		}
+
+		.bike__wrap {
+			position: relative;
+			margin-top: 88px;
+			position: relative;
+			width: 926px;
+			height: 557px;
+		}
+
+		.bike,
+		.part {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.part {
+			opacity: 0;
+			z-index: 5;
+			transition: opacity 0.1s ease;
+		}
+
+		.part.active {
+			opacity: 1;
+			animation: blink 0.4s infinite alternate;
+		}
+
+		@keyframes blink {
+			from {
+				opacity: 0.3;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		.dot {
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			background-color: white;
+			border: 3px solid var(--clr1);
+			border-radius: 50%;
+			cursor: pointer;
+			z-index: 10;
+			transform: translate(-50%, -50%);
+			transition: all 0.3s ease-in-out;
+		}
+
+		.dot:hover {
+			border-color: white;
+			background-color: var(--clr1);
+		}
+
+		.tooltip {
+			flex-direction: column;
+			;
+			position: absolute;
+			background-color: #fff;
+			padding: 24px;
+			border-radius: 16px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+			border: 1px solid #b5ddff;
+			z-index: 100;
+			pointer-events: none;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+			width: 280px;
+			display: none;
+		}
+
+		.tooltip__title {
+			margin-top: 0;
+			font-size: 20px;
+			color: var(--clr1);
+			margin-bottom: 8px;
+		}
+
+		.tooltip__text {
+			margin-top: 0;
+			line-height: 140%;
+			color: #424242;
+			font-size: 14px;
+		}
+
+		.tooltip__items {
+			display: none;
+		}
+
+		.tooltip__items p {
+
+			margin-top: 0;
+			color: #424242;
+			font-size: 14px;
+		}
+
+		/* Позиции точек (нужно настроить под ваше изображение) */
+		.dot.disp {
+			top: 14%;
+			right: 31%;
+		}
+
+		.dot.tormoz {
+			left: 18%;
+			bottom: 32%;
+		}
+
+		.dot.tormoz2 {
+			bottom: 25%;
+			right: 21%;
+		}
+
+		.dot.rych {
+			top: 6%;
+			right: 32%;
+		}
+
+		.dot.trans {
+			bottom: 22%;
+			left: 32%;
+		}
+
+		.dot.sidenie {
+			top: 27%;
+			left: 31%;
+		}
+
+		.dot.amort {
+			top: 56%;
+			left: 22%;
+		}
+
+		.dot.amort2 {
+			top: 60%;
+			right: 18%;
+		}
+
+		.dot.dvig {
+			top: 77%;
+			left: 18%;
+		}
+
+		.dot.dvig2 {
+			top: 76%;
+			right: 15%;
+		}
+
+		.dot.shin {
+			top: 56%;
+			left: 31%;
+		}
+
+		.dot.shin2 {
+			top: 56%;
+			right: 2%;
+		}
+
+		.dot.svet {
+			top: 13%;
+			right: 23%;
+		}
+
+		.dot.svet2 {
+			top: 38%;
+			left: 32%;
+		}
+
+		.dot.rama {
+			top: 40%;
+			left: 60%;
+		}
+
+		.dot.ak {
+			top: 45%;
+			left: 48%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="cnt">
+		<div class="bike__wrap">
+			<!-- Точки для деталей -->
+			<div class="dot disp" data-part="disp"
+				data-description="Дисплей: показывает скорость, заряд батареи и другую информацию"></div>
+			<div class="dot tormoz" data-part="tormoz"
+				data-description="Тормозная система: обеспечивает безопасное торможение"></div>
+			<div class="dot tormoz2" data-part="tormoz2"
+				data-description="Тормозная система: обеспечивает безопасное торможение"></div>
+			<div class="dot rych" data-part="rych" data-description="Рукоятки: управление велосипедом"></div>
+			<div class="dot trans" data-part="trans"
+				data-description="Трансмиссия: передает усилие от педалей к колесу"></div>
+			<div class="dot sidenie" data-part="sidenie" data-description="Сиденье: комфорт при езде"></div>
+			<div class="dot amort" data-part="amort" data-description="Амортизатор: смягчает неровности дороги"></div>
+			<div class="dot amort2" data-part="amort2" data-description="Амортизатор: смягчает неровности дороги"></div>
+			<div class="dot dvig" data-part="dvig" data-description="Двигатель: обеспечивает движение"></div>
+			<div class="dot dvig2" data-part="dvig2" data-description="Двигатель: обеспечивает движение"></div>
+			<div class="dot shin" data-part="shin" data-description="Шина: обеспечивает сцепление с дорогой"></div>
+			<div class="dot shin2" data-part="shin2" data-description="Шина: обеспечивает сцепление с дорогой"></div>
+			<div class="dot svet" data-part="svet" data-description="Фары: освещение в темное время суток"></div>
+			<div class="dot svet2" data-part="svet2" data-description="Фары: освещение в темное время суток"></div>
+			<div class="dot rama" data-part="rama" data-description="Рама: основа велосипеда"></div>
+			<div class="dot ak" data-part="ak" data-description="Аккумулятор: источник энергии для электровелосипеда">
+			</div>
+
+			<!-- Детали велосипеда -->
+			<div class="part disp">
+				<img src="./img/display.png" width="926" height="557">
+			</div>
+			<div class="part tormoz tormoz2">
+				<img src="./img/tormoz.png" width="926" height="557">
+			</div>
+			<div class="part rych">
+				<img src="./img/ruchki.png" width="926" height="557">
+			</div>
+			<div class="part trans">
+				<img src="./img/trans.png" width="926" height="557">
+			</div>
+			<div class="part sidenie">
+				<img src="./img/sidenie.png" width="926" height="557">
+			</div>
+			<div class="part amort amort2">
+				<img src="./img/amort.png" width="926" height="557">
+			</div>
+			<div class="part dvig dvig2">
+				<img src="./img/dvigatel.png" width="926" height="557">
+			</div>
+			<div class="part shin shin2">
+				<img src="./img/shini.png" width="926" height="557">
+			</div>
+			<div class="part svet svet2">
+				<img src="./img/svet.png" width="926" height="557">
+			</div>
+			<div class="part rama">
+				<img src="./img/rama.png" width="926" height="557">
+			</div>
+			<div class="part ak">
+				<img src="./img/akum.png" width="926" height="557">
+			</div>
+			<!-- Всплывающая подсказка -->
+			<div class="tooltip">
+				<p class="tooltip__title">
+					Заголовок
+				</p>
+				<span class="tooltip__text">
+					Здесь будет длинное понятное описание детали электровелосипеда.
+				</span>
+			</div>
+			<!-- Основное изображение велосипеда -->
+			<div class="bike">
+				<img src="./img/bike.png" alt="Велосипед" width="926" height="557">
+			</div>
+		</div>
+
+	</div>
+
+	<script>
+		 document.addEventListener('DOMContentLoaded', function() {
+        const dots = document.querySelectorAll('.dot');
+        const tooltip = document.querySelector('.tooltip');
+        const bikeWrap = document.querySelector('.bike__wrap');
+        
+        // Фиксированные данные для tooltip (одинаковые для всех точек)
+        const tooltipTitle = "Деталь велосипеда";
+        const tooltipText = "Здесь будет длинное понятное описание детали электровелосипеда.";
+        
+        // Установим эти значения один раз при загрузке
+        document.querySelector('.tooltip__title').textContent = tooltipTitle;
+        document.querySelector('.tooltip__text').textContent = tooltipText;
+        
+        dots.forEach(dot => {
+            const partClass = dot.getAttribute('data-part');
+            
+            dot.addEventListener('mouseenter', function() {
+                // Активируем соответствующую деталь
+                document.querySelector(`.part.${partClass}`).classList.add('active');
+                
+                // Показываем tooltip с заранее заданным текстом
+                tooltip.style.display = 'flex';
+                
+                // Позиционируем tooltip по центру под точкой
+                const dotRect = dot.getBoundingClientRect();
+                const wrapRect = bikeWrap.getBoundingClientRect();
+                
+                const posX = dotRect.left - wrapRect.left + dotRect.width/2;
+                const posY = dotRect.top - wrapRect.top + dotRect.height + 10;
+                
+                tooltip.style.left = `calc(${posX}px)`;
+                tooltip.style.top = `${posY}px`;
+            });
+            
+            dot.addEventListener('mouseleave', function() {
+                document.querySelector(`.part.${partClass}`).classList.remove('active');
+                tooltip.style.display = 'none';
+            });
+        });
+    });
+	</script>
+</body>
+
+</html>
