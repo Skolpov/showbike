@@ -5,12 +5,17 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Интерактивный велосипед с мерцанием</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+		rel="stylesheet">
 	<style>
 		body {
-			background-image: url('./img/bg.jpg');
-			background-repeat: no-repeat;
-			background-position: center 0;
+			/* background-image: url('./img/bg.jpg'); */
+			/* background-repeat: no-repeat; */
+			/* background-position: center 0; */
 			font-family: 'Nunito Sans', Open Sans, sans-serif;
+			background-color: #464747;
 
 		}
 
@@ -22,6 +27,16 @@
 			position: relative;
 			max-width: 926px;
 			margin: 0 auto;
+			padding-top: 24px;
+		}
+
+		.bike__main-title {
+			display: none;
+			font-family: 'Open Sans';
+			color: #2A2A2A;
+			font-size: 48px;
+			font-weight: 300;
+			text-align: center;
 		}
 
 		.bike__wrap {
@@ -60,12 +75,24 @@
 			}
 		}
 
+
+		@keyframes blinkDot {
+			from {
+				background-color: white;
+				border-color: var(--clr1);
+			}
+
+			to {
+				background-color: var(--clr1);
+			}
+		}
+
 		.dot {
 			position: absolute;
-			width: 10px;
-			height: 10px;
+			width: 8px;
+			height: 8px;
 			background-color: white;
-			border: 3px solid var(--clr1);
+			border: 2px solid var(--clr1);
 			border-radius: 50%;
 			cursor: pointer;
 			z-index: 10;
@@ -76,6 +103,8 @@
 		.dot:hover {
 			border-color: white;
 			background-color: var(--clr1);
+			animation: blinkDot 0.4s infinite alternate;
+
 		}
 
 		.tooltip {
@@ -204,8 +233,16 @@
 </head>
 
 <body>
+	<div class="logo">
+		<img src="./img/logo.svg" alt="" width="187" height="54" style="margin: 24px 0 0 24px;">
+	</div>
 	<div class="cnt">
+
+		<div class="bike__main-title">
+			Прикоснись к совершенству
+		</div>
 		<div class="bike__wrap">
+
 			<!-- Точки для деталей -->
 			<div class="dot disp" data-part="disp"
 				data-description="Дисплей: показывает скорость, заряд батареи и другую информацию"></div>
@@ -281,46 +318,46 @@
 	</div>
 
 	<script>
-		 document.addEventListener('DOMContentLoaded', function() {
-        const dots = document.querySelectorAll('.dot');
-        const tooltip = document.querySelector('.tooltip');
-        const bikeWrap = document.querySelector('.bike__wrap');
-        
-        // Фиксированные данные для tooltip (одинаковые для всех точек)
-        const tooltipTitle = "Деталь велосипеда";
-        const tooltipText = "Здесь будет длинное понятное описание детали электровелосипеда.";
-        
-        // Установим эти значения один раз при загрузке
-        document.querySelector('.tooltip__title').textContent = tooltipTitle;
-        document.querySelector('.tooltip__text').textContent = tooltipText;
-        
-        dots.forEach(dot => {
-            const partClass = dot.getAttribute('data-part');
-            
-            dot.addEventListener('mouseenter', function() {
-                // Активируем соответствующую деталь
-                document.querySelector(`.part.${partClass}`).classList.add('active');
-                
-                // Показываем tooltip с заранее заданным текстом
-                tooltip.style.display = 'flex';
-                
-                // Позиционируем tooltip по центру под точкой
-                const dotRect = dot.getBoundingClientRect();
-                const wrapRect = bikeWrap.getBoundingClientRect();
-                
-                const posX = dotRect.left - wrapRect.left + dotRect.width/2;
-                const posY = dotRect.top - wrapRect.top + dotRect.height + 10;
-                
-                tooltip.style.left = `calc(${posX}px)`;
-                tooltip.style.top = `${posY}px`;
-            });
-            
-            dot.addEventListener('mouseleave', function() {
-                document.querySelector(`.part.${partClass}`).classList.remove('active');
-                tooltip.style.display = 'none';
-            });
-        });
-    });
+		document.addEventListener('DOMContentLoaded', function () {
+			const dots = document.querySelectorAll('.dot');
+			const tooltip = document.querySelector('.tooltip');
+			const bikeWrap = document.querySelector('.bike__wrap');
+
+			// Фиксированные данные для tooltip (одинаковые для всех точек)
+			const tooltipTitle = "Деталь велосипеда";
+			const tooltipText = "Здесь будет длинное понятное описание детали электровелосипеда.";
+
+			// Установим эти значения один раз при загрузке
+			document.querySelector('.tooltip__title').textContent = tooltipTitle;
+			document.querySelector('.tooltip__text').textContent = tooltipText;
+
+			dots.forEach(dot => {
+				const partClass = dot.getAttribute('data-part');
+
+				dot.addEventListener('mouseenter', function () {
+					// Активируем соответствующую деталь
+					document.querySelector(`.part.${partClass}`).classList.add('active');
+
+					// Показываем tooltip с заранее заданным текстом
+					tooltip.style.display = 'flex';
+
+					// Позиционируем tooltip по центру под точкой
+					const dotRect = dot.getBoundingClientRect();
+					const wrapRect = bikeWrap.getBoundingClientRect();
+
+					const posX = dotRect.left - wrapRect.left + dotRect.width / 2;
+					const posY = dotRect.top - wrapRect.top + dotRect.height + 10;
+
+					tooltip.style.left = `calc(${posX}px)`;
+					tooltip.style.top = `${posY}px`;
+				});
+
+				dot.addEventListener('mouseleave', function () {
+					document.querySelector(`.part.${partClass}`).classList.remove('active');
+					tooltip.style.display = 'none';
+				});
+			});
+		});
 	</script>
 </body>
 
