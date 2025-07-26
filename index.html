@@ -83,7 +83,7 @@
 			}
 
 			to {
-				background-color: var(--clr1);
+				background-color: whate;
 			}
 		}
 
@@ -92,7 +92,7 @@
 			width: 8px;
 			height: 8px;
 			background-color: white;
-			border: 2px solid var(--clr1);
+			border: 4px solid var(--clr1);
 			border-radius: 50%;
 			cursor: pointer;
 			z-index: 10;
@@ -102,7 +102,7 @@
 
 		.dot:hover {
 			border-color: white;
-			background-color: var(--clr1);
+			background-color: white;
 			animation: blinkDot 0.4s infinite alternate;
 
 		}
@@ -155,6 +155,11 @@
 			right: 31%;
 		}
 
+		.dot.tormoz-rul {
+			top: 6%;
+			right: 24%;
+		}
+
 		.dot.tormoz {
 			left: 18%;
 			bottom: 32%;
@@ -171,8 +176,8 @@
 		}
 
 		.dot.trans {
-			bottom: 22%;
-			left: 32%;
+			bottom: 20%;
+			left: 19%;
 		}
 
 		.dot.sidenie {
@@ -191,13 +196,13 @@
 		}
 
 		.dot.dvig {
-			top: 77%;
-			left: 18%;
+			top: 74%;
+			left: 22%;
 		}
 
 		.dot.dvig2 {
-			top: 76%;
-			right: 15%;
+			top: 74%;
+			right: 13%;
 		}
 
 		.dot.shin {
@@ -246,6 +251,8 @@
 			<!-- Точки для деталей -->
 			<div class="dot disp" data-part="disp"
 				data-description="Дисплей: показывает скорость, заряд батареи и другую информацию"></div>
+			<div class="dot tormoz-rul" data-part="tormoz-rul"
+				data-description="Дисплей: показывает скорость, заряд батареи и другую информацию"></div>
 			<div class="dot tormoz" data-part="tormoz"
 				data-description="Тормозная система: обеспечивает безопасное торможение"></div>
 			<div class="dot tormoz2" data-part="tormoz2"
@@ -267,6 +274,9 @@
 			</div>
 
 			<!-- Детали велосипеда -->
+			<div class="part tormoz-rul">
+				<img src="./img/tormoz-rul.png" width="926" height="557">
+			</div>
 			<div class="part disp">
 				<img src="./img/display.png" width="926" height="557">
 			</div>
