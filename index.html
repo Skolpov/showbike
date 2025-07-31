@@ -4,19 +4,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Интерактивный велосипед с мерцанием</title>
+	<title>Интерактивный велосипед с описанием деталей</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
 		rel="stylesheet">
 	<style>
 		body {
-			/* background-image: url('./img/bg.jpg'); */
-			/* background-repeat: no-repeat; */
-			/* background-position: center 0; */
 			font-family: 'Nunito Sans', Open Sans, sans-serif;
 			background-color: #BFBFBF;
-
+			margin: 0;
+			padding: 0;
 		}
 
 		:root {
@@ -75,7 +73,6 @@
 			}
 		}
 
-
 		@keyframes blinkDot {
 			from {
 				background-color: white;
@@ -83,7 +80,7 @@
 			}
 
 			to {
-				background-color: whate;
+				background-color: white;
 			}
 		}
 
@@ -104,12 +101,11 @@
 			border-color: white;
 			background-color: white;
 			animation: blinkDot 0.4s infinite alternate;
-
 		}
 
 		.tooltip {
+			display: none;
 			flex-direction: column;
-			;
 			position: absolute;
 			background-color: #fff;
 			padding: 24px;
@@ -118,17 +114,18 @@
 			border: 1px solid #b5ddff;
 			z-index: 100;
 			pointer-events: none;
-			font-family: Arial, sans-serif;
-			font-size: 14px;
-			width: 280px;
-			display: none;
+			font-size: 16px;
+			width: 320px;
+		}
+
+		.tooltip > * {
+			margin-bottom: 8px;
 		}
 
 		.tooltip__title {
 			margin-top: 0;
-			font-size: 20px;
+			font-size: 18px;
 			color: var(--clr1);
-			margin-bottom: 8px;
 		}
 
 		.tooltip__text {
@@ -136,21 +133,36 @@
 			line-height: 140%;
 			color: #424242;
 			font-size: 14px;
+			white-space: pre-line;
 		}
 
 		.tooltip__items {
-			display: none;
+			padding-left: 0;
+			margin-bottom: 0;
 		}
 
-		.tooltip__items p {
-
-			margin-top: 0;
+		.tooltip__item {
+			position: relative;
+			margin: 6px 0;
 			color: #424242;
-			font-size: 14px;
+			font-size: 13px;
+			line-height: 140%;
+			padding-left: 12px;
 		}
 
-		/* Позиции точек (нужно настроить под ваше изображение) */
-		.dot.disp {
+		.tooltip__item:before {
+			content: '';
+			position: absolute;
+			top: 7px;
+			left: 0;
+			width: 5px;
+			height: 5px;
+			border-radius: 50%;
+			background-color: var(--clr1);
+		}
+
+		/* Позиции точек */
+		.dot.display {
 			top: 14%;
 			right: 31%;
 		}
@@ -170,7 +182,7 @@
 			right: 21%;
 		}
 
-		.dot.rych {
+		.dot.rychki {
 			top: 6%;
 			right: 32%;
 		}
@@ -195,12 +207,12 @@
 			right: 18%;
 		}
 
-		.dot.dvig {
+		.dot.dvigatel {
 			top: 74%;
 			left: 22%;
 		}
 
-		.dot.dvig2 {
+		.dot.dvigatel2 {
 			top: 74%;
 			right: 13%;
 		}
@@ -242,48 +254,40 @@
 		<img src="./img/logo.svg" alt="" width="187" height="54" style="margin: 24px 0 0 24px;">
 	</div>
 	<div class="cnt">
-
 		<div class="bike__main-title">
 			Прикоснись к совершенству
 		</div>
 		<div class="bike__wrap">
-
 			<!-- Точки для деталей -->
-			<div class="dot disp" data-part="disp"
-				data-description="Дисплей: показывает скорость, заряд батареи и другую информацию"></div>
-			<div class="dot tormoz-rul" data-part="tormoz-rul"
-				data-description="Дисплей: показывает скорость, заряд батареи и другую информацию"></div>
-			<div class="dot tormoz" data-part="tormoz"
-				data-description="Тормозная система: обеспечивает безопасное торможение"></div>
-			<div class="dot tormoz2" data-part="tormoz2"
-				data-description="Тормозная система: обеспечивает безопасное торможение"></div>
-			<div class="dot rych" data-part="rych" data-description="Рукоятки: управление велосипедом"></div>
-			<div class="dot trans" data-part="trans"
-				data-description="Трансмиссия: передает усилие от педалей к колесу"></div>
-			<div class="dot sidenie" data-part="sidenie" data-description="Сиденье: комфорт при езде"></div>
-			<div class="dot amort" data-part="amort" data-description="Амортизатор: смягчает неровности дороги"></div>
-			<div class="dot amort2" data-part="amort2" data-description="Амортизатор: смягчает неровности дороги"></div>
-			<div class="dot dvig" data-part="dvig" data-description="Двигатель: обеспечивает движение"></div>
-			<div class="dot dvig2" data-part="dvig2" data-description="Двигатель: обеспечивает движение"></div>
-			<div class="dot shin" data-part="shin" data-description="Шина: обеспечивает сцепление с дорогой"></div>
-			<div class="dot shin2" data-part="shin2" data-description="Шина: обеспечивает сцепление с дорогой"></div>
-			<div class="dot svet" data-part="svet" data-description="Фары: освещение в темное время суток"></div>
-			<div class="dot svet2" data-part="svet2" data-description="Фары: освещение в темное время суток"></div>
-			<div class="dot rama" data-part="rama" data-description="Рама: основа велосипеда"></div>
-			<div class="dot ak" data-part="ak" data-description="Аккумулятор: источник энергии для электровелосипеда">
-			</div>
+			<div class="dot display" data-part="display"></div>
+			<div class="dot tormoz-rul" data-part="tormoz-rul"></div>
+			<div class="dot tormoz" data-part="tormoz"></div>
+			<div class="dot tormoz2" data-part="tormoz2"></div>
+			<div class="dot rychki" data-part="rychki"></div>
+			<div class="dot trans" data-part="trans"></div>
+			<div class="dot sidenie" data-part="sidenie"></div>
+			<div class="dot amort" data-part="amort"></div>
+			<div class="dot amort2" data-part="amort2"></div>
+			<div class="dot dvigatel" data-part="dvigatel"></div>
+			<div class="dot dvigatel2" data-part="dvigatel2"></div>
+			<div class="dot shin" data-part="shin"></div>
+			<div class="dot shin2" data-part="shin2"></div>
+			<div class="dot svet" data-part="svet"></div>
+			<div class="dot svet2" data-part="svet2"></div>
+			<div class="dot rama" data-part="rama"></div>
+			<div class="dot ak" data-part="ak"></div>
 
 			<!-- Детали велосипеда -->
 			<div class="part tormoz-rul">
 				<img src="./img/tormoz-rul.png" width="926" height="557">
 			</div>
-			<div class="part disp">
+			<div class="part display">
 				<img src="./img/display.png" width="926" height="557">
 			</div>
 			<div class="part tormoz tormoz2">
 				<img src="./img/tormoz.png" width="926" height="557">
 			</div>
-			<div class="part rych">
+			<div class="part rychki">
 				<img src="./img/ruchki.png" width="926" height="557">
 			</div>
 			<div class="part trans">
@@ -295,7 +299,7 @@
 			<div class="part amort amort2">
 				<img src="./img/amort.png" width="926" height="557">
 			</div>
-			<div class="part dvig dvig2">
+			<div class="part dvigatel dvigatel2">
 				<img src="./img/dvigatel.png" width="926" height="557">
 			</div>
 			<div class="part shin shin2">
@@ -310,56 +314,212 @@
 			<div class="part ak">
 				<img src="./img/akum.png" width="926" height="557">
 			</div>
+
 			<!-- Всплывающая подсказка -->
 			<div class="tooltip">
-				<p class="tooltip__title">
-					Заголовок
-				</p>
-				<span class="tooltip__text">
-					Здесь будет длинное понятное описание детали электровелосипеда.
-				</span>
+				<p class="tooltip__title"></p>
+				<span class="tooltip__text"></span>
+				<div class="tooltip__items"></div>
 			</div>
+
 			<!-- Основное изображение велосипеда -->
 			<div class="bike">
 				<img src="./img/bike.png" alt="Велосипед" width="926" height="557">
 			</div>
 		</div>
-
 	</div>
 
 	<script>
+		// Все данные о деталях в одном объекте
+		const bikePartsData = {
+			display: {
+				title: "Дисплей",
+				description: "Бортовой компьютер: ваш надежный штурман в мире скорости и технологий.",
+				items: [
+					"Точный индикатор заряда аккумулятора в процентах– будьте уверены в каждом километре пути.",
+					"Интуитивный выбор режима движения –один режим полностью для ручного управления, и 4 режима на электротяге, каждый режим ограничен по мощности.",
+					"Переключение между мотор - колесами (переднее, заднее, полный привод) – покоряйте любые поверхности.",
+					"Отображение текущей скорости – держите руку на пульсе вашего движения.",
+				]
+			},
+			"tormoz-rul": {
+				title: "Ручки переднего и заднего тормоза",
+				items: [
+					"Передний тормоз: Мощное и мгновенное замедление. Почувствуйте уверенность в каждой остановке, контролируя инерцию с ювелирной точностью.",
+					"Задний тормоз: Плавное и предсказуемое торможение. Идеальный баланс для деликатного снижения скорости и поддержания стабильности в любых условиях."
+				]
+			},
+			tormoz: {
+				title: "Тормозная система",
+				description: "Электровелосипед, оснащен тормозной системой, - это сочетание мощности и контроля. Надежность тормозной системы обеспечивает уверенное и предсказуемое торможение в любых условиях, будь то крутой спуск или внезапная остановка в городском потоке. Это гарантия безопасности и комфорта в каждой поездке.",
+			},
+			tormoz2: {
+				title: "Тормозная система",
+				description: "Электровелосипед, оснащен тормозной системой, - это сочетание мощности и контроля. Надежность тормозной системы обеспечивает уверенное и предсказуемое торможение в любых условиях, будь то крутой спуск или внезапная остановка в городском потоке. Это гарантия безопасности и комфорта в каждой поездке.",
+			},
+			rychki: {
+				title: "Ручки",
+				description: "Кожаные ручки электровелосипеда – это не только элегантный штрих, но и гарантия непревзойденного комфорта. Мягкая, дышащая кожа идеально ложится в руку, обеспечивая надежный хват и амортизируя вибрации. С ними даже самые долгие путешествия станут удовольствием!",
+			},
+			trans: {
+				title: "Трансмиссия",
+				description: "Почувствуйте плавное и уверенное переключение с 7-скоростной трансмиссией Shimano на вашем электровелосипеде.",
+			},
+			sidenie: {
+				title: "Сиденье",
+				description: "Ортопедическая геометрия способствует комфортному передвижению по пересечённой местности и скалистым участкам.",
+			},
+			amort: {
+				title: "Амортизаторы",
+				items: [
+					"Амортизаторы на передней и задней оси",
+					"Энергоемкие, амортизационные механизмы, сделают вашу поездку приятной и комфортной",
+					"Позволяют передвигаться по пересечённой и скалистой местности",
+				]
+			},
+			amort2: {
+				title: "Амортизаторы",
+				items: [
+					"Амортизаторы на передней и задней оси",
+					"Энергоемкие, амортизационные механизмы, сделают вашу поездку приятной и комфортной",
+					"Позволяют передвигаться по пересечённой и скалистой местности",
+				]
+			},
+			dvigatel: {
+				title: "Электродвигатель",
+				description: "Бесшумный и энергоэффективный электродвигатель нового поколения, выдающий максимальную мощность на единицу энергии. Этот двигатель – воплощение инженерного совершенства, сочетающее в себе мощь и эффективность.",
+				items: [
+					"Пиковая мощность: 1400 Вт – взрывной потенциал для мгновенного ускорения.",
+					"Номинальная мощность: 750 Вт – стабильная и надежная работа в любых условиях.",
+				]
+			},
+			dvigatel2: {
+				title: "Электродвигатель",
+				description: "Бесшумный и энергоэффективный электродвигатель нового поколения, выдающий максимальную мощность на единицу энергии. Этот двигатель – воплощение инженерного совершенства, сочетающее в себе мощь и эффективность.",
+				items: [
+					"Пиковая мощность: 1400 Вт – взрывной потенциал для мгновенного ускорения.",
+					"Номинальная мощность: 750 Вт – стабильная и надежная работа в любых условиях.",
+				]
+			},
+			shin: {
+				title: "Шины",
+				description: "Шины для электровелосипеда 24/3 и 24/4 дюйма отличаются шириной:",
+				items: [
+					"24/3: 24 дюйма - диаметр колеса, 3 дюйма - ширина шины. Эта шина шире, чем стандартная, обеспечивает лучшее сцепление, комфорт и амортизацию на неровных поверхностях.",
+					"24/4: 24 дюйма - диаметр колеса, 4 дюйма - ширина шины. Эта шина еще шире, чем 24/3, и называется «фэт-байк» шиной. Обеспечивает максимальное сцепление и проходимость, особенно на песке, снегу и грязи.",
+				]
+			},
+			shin2: {
+				title: "Шины",
+				description: "Шины для электровелосипеда 24/3 и 24/4 дюйма отличаются шириной:",
+				items: [
+					"24/3: 24 дюйма - диаметр колеса, 3 дюйма - ширина шины. Эта шина шире, чем стандартная, обеспечивает лучшее сцепление, комфорт и амортизацию на неровных поверхностях.",
+					"24/4: 24 дюйма - диаметр колеса, 4 дюйма - ширина шины. Эта шина еще шире, чем 24/3, и называется «фэт-байк» шиной. Обеспечивает максимальное сцепление и проходимость, особенно на песке, снегу и грязи.",
+				]
+			},
+			svet: {
+				title: "Световая система безопасности",
+				description: "Электровелосипед оснащен ярким передним светом для видимости пути, а сзади — многофункциональный фонарь, сочетающий габаритный огонь, стоп-сигнал и указатели поворота, делая каждую поездку максимально безопасной и предсказуемой для окружающих.",
+			},
+			svet2: {
+				title: "Световая система безопасности",
+				description: "Электровелосипед оснащен ярким передним светом для видимости пути, а сзади — многофункциональный фонарь, сочетающий габаритный огонь, стоп-сигнал и указатели поворота, делая каждую поездку максимально безопасной и предсказуемой для окружающих.",
+			},
+			rama: {
+				title: "Рама",
+				items: [
+					"Изготовлена из алюминия 6000 серии или авиационного алюминия.",
+					"Имеет малый вес.",
+					"Отличные амортизирующие свойства.",
+					"Высокая устойчивость к коррозии, даже в экстремальной среде.",
+					"Выдерживает высокую нагрузку."
+				]
+			},
+			ak: {
+				title: "Аккумулятор",
+				items: [
+					"Повышенная плотность ячейки: больше энергии в компактном формате для больших расстояний.",
+					"Уменьшенное сопротивление: эффективная работа и меньше потерь энергии.",
+					"Высокая токоотдача: мощный разгон и преодоление препятствий.",
+					"Быстрая зарядка: меньше времени на подзарядку и больше времени для приключений!",
+				]
+			}
+		};
+
 		document.addEventListener('DOMContentLoaded', function () {
 			const dots = document.querySelectorAll('.dot');
 			const tooltip = document.querySelector('.tooltip');
+			const tooltipTitle = tooltip.querySelector('.tooltip__title');
+			const tooltipText = tooltip.querySelector('.tooltip__text');
+			const tooltipItems = tooltip.querySelector('.tooltip__items');
 			const bikeWrap = document.querySelector('.bike__wrap');
-
-			// Фиксированные данные для tooltip (одинаковые для всех точек)
-			const tooltipTitle = "Деталь велосипеда";
-			const tooltipText = "Здесь будет длинное понятное описание детали электровелосипеда.";
-
-			// Установим эти значения один раз при загрузке
-			document.querySelector('.tooltip__title').textContent = tooltipTitle;
-			document.querySelector('.tooltip__text').textContent = tooltipText;
 
 			dots.forEach(dot => {
 				const partClass = dot.getAttribute('data-part');
+				const partData = bikePartsData[partClass];
+
+				if (!partData) {
+					console.warn(`No data found for part: ${partClass}`);
+					return;
+				}
 
 				dot.addEventListener('mouseenter', function () {
 					// Активируем соответствующую деталь
 					document.querySelector(`.part.${partClass}`).classList.add('active');
 
-					// Показываем tooltip с заранее заданным текстом
-					tooltip.style.display = 'flex';
+					// Устанавливаем текст в tooltip
+					tooltipTitle.textContent = partData.title || '';
+					tooltipText.textContent = partData.description || '';
 
-					// Позиционируем tooltip по центру под точкой
+					// Скрываем text, если description отсутствует
+					tooltipText.style.display = partData.description ? 'block' : 'none';
+
+					// Очищаем и добавляем пункты списка
+					tooltipItems.innerHTML = '';
+					if (partData.items && partData.items.length > 0) {
+						partData.items.forEach(item => {
+							if (item) {
+								const itemElement = document.createElement('div');
+								itemElement.className = 'tooltip__item';
+								itemElement.textContent = item;
+								tooltipItems.appendChild(itemElement);
+							}
+						});
+						tooltipItems.style.display = 'block';
+					} else {
+						tooltipItems.style.display = 'none';
+					}
+
+					// Показываем tooltip под точкой
 					const dotRect = dot.getBoundingClientRect();
 					const wrapRect = bikeWrap.getBoundingClientRect();
 
+					// Позиционируем tooltip под точкой
 					const posX = dotRect.left - wrapRect.left + dotRect.width / 2;
 					const posY = dotRect.top - wrapRect.top + dotRect.height + 10;
 
-					tooltip.style.left = `calc(${posX}px)`;
-					tooltip.style.top = `${posY}px`;
+					// Корректируем позицию, чтобы tooltip не выходил за границы контейнера
+					const tooltipWidth = tooltip.offsetWidth;
+					const tooltipHeight = tooltip.offsetHeight;
+
+					let finalX = posX;
+					let finalY = posY;
+
+					if (posX + tooltipWidth > wrapRect.width) {
+						finalX = wrapRect.width - tooltipWidth - 10;
+					}
+
+					if (posX < 0) {
+						finalX = 10;
+					}
+
+					if (posY + tooltipHeight > wrapRect.height) {
+						finalY = dotRect.top - wrapRect.top - tooltipHeight - 10;
+					}
+
+					tooltip.style.left = `${finalX}px`;
+					tooltip.style.top = `${finalY}px`;
+					tooltip.style.display = 'flex';
 				});
 
 				dot.addEventListener('mouseleave', function () {
